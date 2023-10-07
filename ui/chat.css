@@ -1,0 +1,42 @@
+.chat-container{
+    height: 85% !important;
+}
+
+.chat-box{
+    color: #D2D0CE;
+}
+
+.text-box{
+    width: 100%!important;
+}
+
+.send-button{
+    width: 100%!important;
+    background-color: #3B3A39;
+}
+
+.text-area{
+    background-color: #3B3A39;
+    border-radius: 1rem 1rem 0 0;
+    color: inherit;
+    border: none;
+    padding: 1rem;
+}.text-area:focus {
+    outline: none;
+}
+
+.send-button{
+    border-radius: 0 0 1rem 1rem;
+
+}
+.send{
+    background-color: inherit;
+	border: none;
+	outline: inherit;
+    border-radius: 0 0 1rem 1rem;
+    color: inherit;
+}
+
+.bg-secondary{
+    background-color: #212020 !important;
+}
