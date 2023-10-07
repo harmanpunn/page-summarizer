@@ -2,6 +2,9 @@ import { config } from "dotenv"
 import OpenAIApi from "openai"
 import axios from "axios"
 import * as cheerio from "cheerio"
+import * as fs from 'fs';
+import * as https from 'https';
+
 
 //Read API key from .env file
 config()
@@ -54,28 +57,40 @@ async function getHeadline(url) {
 //const express = require('express');
 import  express from "express"
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 
 app.use(express.json())
-//const cors = require('cors');
 import cors from "cors"
 app.use(cors());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    if ('OPTIONS' == req.method) {
-       res.sendStatus(200);
-     }
-     else {
-       next();
-}});
 
-app.listen(
-    PORT,
-    () => console.log(`server running on ${PORT}`)
-)
+const privateKey = fs.readFileSync('key.pem', 'utf8');
+const certificate = fs.readFileSync('cert.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate, passphrase: 'test' }; // Replace 'YOUR_PASSPHRASE' with the passphrase you set earlier
+
+// import cors from "cors"
+// app.use(cors());
+
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     if ('OPTIONS' == req.method) {
+//        res.sendStatus(200);
+//      }
+//      else {
+//        next();
+// }});
+
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(3000, () => {
+    console.log('HTTPS Server running on port 3000');
+});
+
+// app.listen(
+//     PORT,
+//     () => console.log(`server running on ${PORT}`)
+// )
 
 app.get('/', (req, res) =>{
     res.send('test 1')
@@ -90,8 +105,8 @@ app.get('/talk_to_GPT', (req, res) => {
     if (url == 'test'){
         res.send("Test successful")
     } 
-    //const { body } = req.body;
-    getHeadline(url).then(async data => {
+    // const { body } = req.body;
+    getHeadline(url).then( data => {
         //console.log(data);
         let gptTitle = data.title;
         let gptPrompt = data.content;
@@ -99,11 +114,11 @@ app.get('/talk_to_GPT', (req, res) => {
         let additionalInput = '\nSummarize this article for me in 60 words.'
         // let gptResponse = await talkToGPT(gptTitle+ gptPrompt + additionalInput);
 
-        // const result = {
-        //     summary: gptResponse,
-        //     relevant_links: links
-        // };
-        const result = 'resolved cross origin'
+        const result = {
+            summary: gptTitle,
+            relevant_links: links
+        };
+        // const result = 'resolved cross origin'
         res.send(result);
     });
     
