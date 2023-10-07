@@ -1,16 +1,18 @@
 import { config } from "dotenv"
 import OpenAIApi from "openai"
+import axios from "axios"
+import * as cheerio from "cheerio"
 
 //Read API key from .env file
 config()
 //console.log(process.env.API_KEY)
 
-const axios = require('axios');
-const cheerio = require('cheerio');
+//const axios = require('axios');
+//const cheerio = require('cheerio');
 
-const GOOGLE_CSE_API_ENDPOINT = as;
-const API_KEY =  as;// Your API key
-const CX =   as;// Your Custom Search Engine ID
+const GOOGLE_CSE_API_ENDPOINT = 'https://www.googleapis.com/customsearch/v1';
+const API_KEY = 'AIzaSyA9BzAwVPbefgffx6NtZ1nd_5U4XI7edfs' ;// Your API key
+const CX =   'a0737af91bf2b4397';// Your Custom Search Engine ID
 
 //Scrapper functions
 async function getRelevantLinks(headline) {
@@ -49,7 +51,8 @@ async function getHeadline(url) {
 
 
 //API request handling
-const express = require('express');
+//const express = require('express');
+import  express from "express"
 const app = express();
 const PORT = 8080;
 
@@ -60,24 +63,37 @@ app.listen(
     () => console.log(`server running on ${PORT}`)
 )
 
+app.get('/', (req, res) =>{
+    res.send('test 1')
+})
 app.get('/talk_to_GPT', (req, res) => {
-    const url = req.params['url'];
+    //console.log(req)
+    
+    //const url = req.params['url'];
+    const url = req.query.url
+    console.log(url)
+    //res.send(url + 'hello')
+    if (url == 'test'){
+        res.send("Test successful")
+    } 
     //const { body } = req.body;
     getHeadline(url).then(data => {
-        console.log(data);
-    });
-    let gptTitle = data.title;
-    let gptPrompt = data.content;
-    let links = data.relevant_links;
-    let additionalInput = '\nSummarize this article for me in 60 words.'
-        
-    gptResponse = talkToGPT(gptTitle+ gptPrompt + additionalInput);
+        //console.log(data);
+        let gptTitle = data.title;
+        let gptPrompt = data.content;
+        let links = data.relevant_links;
+        let additionalInput = '\nSummarize this article for me in 60 words.'
+        let gptResponse = talkToGPT(gptTitle+ gptPrompt + additionalInput);
 
-    const result = {
-        summary: gptResponse,
-        relevant_links: links
-    };
-    res.send(result);
+        const result = {
+            summary: gptResponse,
+            relevant_links: links
+        };
+        res.send(result);
+    });
+    
+        
+    
 
 })
 
