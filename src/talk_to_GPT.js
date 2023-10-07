@@ -77,13 +77,13 @@ app.get('/talk_to_GPT', (req, res) => {
         res.send("Test successful")
     } 
     //const { body } = req.body;
-    getHeadline(url).then(data => {
+    getHeadline(url).then(async data => {
         //console.log(data);
         let gptTitle = data.title;
         let gptPrompt = data.content;
         let links = data.relevant_links;
         let additionalInput = '\nSummarize this article for me in 60 words.'
-        let gptResponse = talkToGPT(gptTitle+ gptPrompt + additionalInput);
+        let gptResponse = await talkToGPT(gptTitle+ gptPrompt + additionalInput);
 
         const result = {
             summary: gptResponse,
