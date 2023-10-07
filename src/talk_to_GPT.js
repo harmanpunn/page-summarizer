@@ -57,6 +57,20 @@ const app = express();
 const PORT = 8080;
 
 app.use(express.json())
+//const cors = require('cors');
+import cors from "cors"
+app.use(cors());
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    if ('OPTIONS' == req.method) {
+       res.sendStatus(200);
+     }
+     else {
+       next();
+}});
 
 app.listen(
     PORT,
@@ -83,12 +97,13 @@ app.get('/talk_to_GPT', (req, res) => {
         let gptPrompt = data.content;
         let links = data.relevant_links;
         let additionalInput = '\nSummarize this article for me in 60 words.'
-        let gptResponse = await talkToGPT(gptTitle+ gptPrompt + additionalInput);
+        // let gptResponse = await talkToGPT(gptTitle+ gptPrompt + additionalInput);
 
-        const result = {
-            summary: gptResponse,
-            relevant_links: links
-        };
+        // const result = {
+        //     summary: gptResponse,
+        //     relevant_links: links
+        // };
+        const result = 'resolved cross origin'
         res.send(result);
     });
     
