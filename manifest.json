@@ -36,7 +36,8 @@
             ],
             "css": [
                 "styles.css",
-                "bootstrap/css/bootstrap.min.css"
+                "bootstrap/css/bootstrap.min.css",
+                "font-awesome.min.css"
             ]
         }
     ]

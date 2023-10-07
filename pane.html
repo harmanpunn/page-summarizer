@@ -7,11 +7,43 @@
 </head>
 
 <body>
-    <div id="container">
-        <span id="closeIcon">&times;</span>
-        <button id="summarizeBtn" class="btn btn-primary btn-sm">Summarize</button>
-        <div id="summary" class="mt-3">
-            <p></p>
+    <div id="container" class="h-100 p-0">
+        <div class="widget-container d-flex flex-column bg-custom-dark h-100 p-3">
+            <div class="d-flex alig n-items-center">
+                <div class="flex-fill">
+                    <button id="summarizeBtn" class="btn btn-primary btn-sm">Summarize</button>
+                </div>
+                <span id="closeIcon">&times;</span>
+            </div>
+            <div class="d-flex flex-column h-100 p-0 m-0">
+                <div id="summary" class="pt-3 p-2">
+                    <p></p>
+                </div>
+                <div id="chat" class="chat d-flex flex-column">
+                    <div id="chat-container" class="chat-container p-2">
+                      <div
+                        id="chat-window"
+                        class="chat-window border overflow-auto border-dark flex-fill h-100 rounded"
+                      ></div>
+                    </div>
+                    <div id="chat-box" class="chat-box px-3 pb-3">
+                      <div class="rounded text-box">
+                        <textarea
+                          id="chat-textarea"
+                          class="custom-text-area w-100 h-100 overflow-auto"
+                          style="resize: none"
+                        ></textarea>
+                      </div>
+                      <div
+                        class="send-button flex-fill d-flex align-items-center justify-content-end"
+                      >
+                        <span id="charCount">0</span>
+                        <span> /2000</span>
+                        <i class="send p-2 px-3">></i>
+                      </div>
+                    </div>
+                  </div>
+            </div>
         </div>
     </div>
 
