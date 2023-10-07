@@ -26,15 +26,14 @@
         <div class="col-9 p-0 m-0"></div>
         <div class="col-3 p-0 m-0 d-flex flex-column">
           <div class="summary"></div>
-          <div class="chat flex-fill bg-secondary d-flex flex-column">
-            <div
-              class="chat-container d-flex align-items-center justify-content-center p-3"
-            >
+          <div id="chat" class="chat bg-secondary d-flex flex-column">
+            <div id="chat-container" class="chat-container p-3">
               <div
+                id="chat-window"
                 class="chat-window border overflow-auto border-dark flex-fill h-100 rounded"
               ></div>
             </div>
-            <div class="chat-box d-flex flex-column flex-fill px-3 pb-3">
+            <div id="chat-box" class="chat-box px-3 pb-3">
               <div class="rounded text-box">
                 <textarea
                   id="chat-textarea"
@@ -43,7 +42,7 @@
                 ></textarea>
               </div>
               <div
-                class="send-button flex-fill d-flex align-items-center justify-content-end py-2"
+                class="send-button flex-fill d-flex align-items-center justify-content-end"
               >
                 <span id="charCount">0</span>
                 <span> /2000</span>

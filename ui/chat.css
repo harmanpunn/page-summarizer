@@ -1,13 +1,14 @@
-.chat-container{
-    height: 85% !important;
-}
-
 .chat-box{
     color: #D2D0CE;
 }
 
+.chat-window::-webkit-scrollbar {
+    display: none;
+  }
+
 .text-box{
     width: 100%!important;
+    height: 75%;
 }
 
 .send-button{
@@ -36,7 +37,21 @@
     border-radius: 0 0 1rem 1rem;
     color: inherit;
 }
-
 .bg-secondary{
     background-color: #212020 !important;
+}
+
+.chat-bubble{
+    background-color: #3B3A39;
+    padding: 0.6rem 0.5rem 0.6rem;
+    color: #D2D0CE ;
+    width: fit-content;
+    border-radius: 0.25rem;
+}
+
+.user-chat{
+    text-align: right;
+}
+.other-chat{
+    text-align: left;
 }
