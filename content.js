@@ -41,7 +41,7 @@ function fetchSummary() {
   const currentPageUrl = encodeURIComponent(window.location.href);
   // const currentPageUrl = window.location.href;
 
-  const apiUrl = `https://192.168.1.50:3000/talk_to_GPT?url=${currentPageUrl}`;
+  const apiUrl = `http://localhost:3000/talk_to_GPT?url=${currentPageUrl}`;
 
   return fetch(apiUrl)
       .then(response => {
@@ -55,7 +55,6 @@ function injectPane(htmlContent) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlContent, 'text/html');
   const pane = doc.querySelector('#container');
-
   document.body.appendChild(pane);
 
   const chatContainer = document.getElementById('chat-container')
@@ -99,9 +98,8 @@ function injectPane(htmlContent) {
     try {
         const data = await fetchSummary();
         const summaryText = data.summary || "Summary not available.";
-        console.log("Summary:", summaryText);
-        document.querySelector('#summary p').innerText = summaryText;
-        document.getElementById('summary').style.display = 'block';
+        document.querySelector('#summary p').innerText = summaryText + "...";
+        document.getElementById('summarizeBtn').disabled = true;
     } catch (error) {
         console.error("Error fetching summary:", error);
         document.querySelector('#summary p').innerText = "Error fetching summary.";
@@ -110,6 +108,8 @@ function injectPane(htmlContent) {
 
 }
 
+
+console.log(!document.getElementById("container"));
 if (!document.getElementById('container')) {
   fetch(chrome.runtime.getURL('pane.html'))
       .then(response => response.text())
