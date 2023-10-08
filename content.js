@@ -85,20 +85,31 @@ function injectPane(htmlContent) {
 
   textarea.addEventListener("keypress",async function (event) {
     // Get the key code of the key pressed
+
     if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      console.log("Submit chat!");
-      chatHistory.push({
-        id: chatHistory.length,
-        text: textarea.value,
-        isUser: true,
-      });
-      addChatBubble();
-      textarea.value = "";
-      var response = await getChatResponse();
-      response["id"] = chatHistory.length
-      chatHistory.push(response)
-      addChatBubble();
+      try {
+        document.getElementById("loader-chat").style.display = "block";
+        document.getElementById("chat-arrow").style.display = "none";
+        event.preventDefault();
+        console.log("Submit chat!");
+        chatHistory.push({
+          id: chatHistory.length,
+          text: textarea.value,
+          isUser: true,
+        });
+        addChatBubble();
+        textarea.value = "";
+        var response = await getChatResponse();
+        response["id"] = chatHistory.length
+        chatHistory.push(response)
+        addChatBubble();
+      } catch(error) {
+        console.error("Error fetching chat:", error);
+      } finally {
+        document.getElementById("loader-chat").style.display = "none";
+        document.getElementById("chat-arrow").style.display = "block";
+      }
+      
     }
   });
 
@@ -107,21 +118,25 @@ function injectPane(htmlContent) {
     pane.style.display = "none";
   });
 
-  document
-    .getElementById("summarizeBtn")
-    .addEventListener("click", async function () {
-      try {
+  document.getElementById("summarizeBtn").addEventListener("click", async function() {
+    document.getElementById("summarizeBtn").style.display = "none";
+    document.getElementById("loader").style.display = "block";
+
+    try {
         const data = await fetchSummary();
         const summaryText = data.summary || "Summary not available.";
         summary = summaryText;
-        document.querySelector("#summary p").innerText = summaryText + "...";
-        document.getElementById("summarizeBtn").disabled = true;
-      } catch (error) {
+        document.querySelector("#summary p").innerText = summaryText;
+        document.getElementById("summary").classList.remove("invisible");
+        document.getElementById("chat-textarea").disabled = false;
+    } catch (error) {
         console.error("Error fetching summary:", error);
-        document.querySelector("#summary p").innerText =
-          "Error fetching summary.";
-      }
-    });
+        document.querySelector("#summary p").innerText = "Error fetching summary.";
+    } finally {
+        document.getElementById("loader").style.display = "none";
+    }
+  });
+
 }
 
 console.log(!document.getElementById("container"));

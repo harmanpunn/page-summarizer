@@ -17,7 +17,7 @@ const CX = "a0737af91bf2b4397"; // Your Custom Search Engine ID
 //   apiKey: process.env.OpenAI_API_KEY,
 // });
 
-const llm_url = "http://127.0.0.1:5000/";
+const llm_url = "http://192.168.1.187:5000/";
 
 const app = express();
 const PORT = 3000;
@@ -36,13 +36,13 @@ async function talkToGPT(gptPrompt) {
 }
 
 async function summarize(content) {
-  let prompt = `Given the text below, generate its summary in under 60 words.
+  let prompt = `Given the text below, generate its summary not more than 60 words. Do not generate bullet points. Only Paragraph covering the main points.
   
-  TEXT:
-  ${content}
+TEXT:
+${content}
 
-  SUMMARY:
-  `;
+SUMMARY:
+`;
   const response = await axios.post(llm_url + "infer", { prompt: prompt });
   if (response.data && response.data.generated_text) {
     const summary = response.data.generated_text;

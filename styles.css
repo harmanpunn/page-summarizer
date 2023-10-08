@@ -15,78 +15,88 @@
 #summary {
     /* display: none; */
     height: 35%;
+    border: 1px solid #716e6e;
+}
+
+#summary p {
+    line-height: 1.1em;
 }
 
 #closeIcon {
-    color: #D2D0CE ;
+    color: #D2D0CE;
     cursor: pointer;
     font-size: 20px;
 }
 
-.chat{
+.chat {
     height: 65%;
 }
 
-.row{
+.row {
     padding: 0;
     margin: 0;
 }
 
-.chat-box{
+.chat-box {
     color: #D2D0CE;
 }
 
 .chat-window::-webkit-scrollbar {
     display: none;
-  }
+}
 
-.text-box{
-    width: 100%!important;
+.text-box {
+    width: 100% !important;
     height: 75%;
 }
 
-.send-button{
-    width: 100%!important;
+.send-button {
+    width: 100% !important;
     background-color: #3B3A39;
 }
 
-.custom-text-area{
+.custom-text-area {
     background-color: #3B3A39;
     border-radius: 1rem 1rem 0 0;
     color: inherit;
     border: none;
     padding: 1rem;
-}.custom-text-area:focus {
+}
+
+.custom-text-area:focus {
     outline: none;
 }
 
-.send-button{
+.send-button {
     border-radius: 0 0 1rem 1rem;
 
 }
-.send{
+
+.send {
     background-color: inherit;
-	border: none;
-	outline: inherit;
+    border: none;
+    outline: inherit;
     border-radius: 0 0 1rem 1rem;
     color: inherit;
     cursor: pointer;
 }
-.bg-custom-dark{
+
+.bg-custom-dark {
     background-color: #212020 !important;
 }
 
-.chat-bubble{
+.chat-bubble {
     background-color: #3B3A39;
     padding: 0.6rem 0.5rem 0.6rem;
-    color: #D2D0CE ;
+    color: #D2D0CE;
     width: fit-content;
     border-radius: 0.25rem;
 }
 
-.user-chat{
+.user-chat {
     text-align: right;
 }
-.other-chat{
+
+.other-chat {
     text-align: left;
 }
