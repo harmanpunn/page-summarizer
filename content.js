@@ -41,7 +41,7 @@ function fetchSummary() {
   const currentPageUrl = encodeURIComponent(window.location.href);
   // const currentPageUrl = window.location.href;
 
-  const apiUrl = `http://192.168.1.161:8080/talk_to_GPT?url=${currentPageUrl}`;
+  const apiUrl = `https://192.168.1.50:3000/talk_to_GPT?url=${currentPageUrl}`;
 
   return fetch(apiUrl)
       .then(response => {
