@@ -1,0 +1,51 @@
+{
+    "manifest_version": 3,
+    "name": "InsightWing : Webpage Summarizer",
+    "version": "1.0",
+    "description": "Summarizes webpages",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://localhost/**"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "pane.html",
+                "bootstrap/css/bootstrap.min.css",
+                "bootstrap/js/bootstrap.min.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "icons":{
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "action": {
+        "default_title": "InsightWing"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "bootstrap/js/bootstrap.min.js"
+            ],
+            "css": [
+                "styles.css",
+                "bootstrap/css/bootstrap.min.css",
+                "font-awesome.min.css"
+            ]
+        }
+    ]
+}
