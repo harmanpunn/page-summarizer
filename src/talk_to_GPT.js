@@ -17,7 +17,7 @@ const CX = "a0737af91bf2b4397"; // Your Custom Search Engine ID
 //   apiKey: process.env.OpenAI_API_KEY,
 // });
 
-const llm_url = "http://127.0.0.1:5000/infer"
+const llm_url = "http://127.0.0.1:5000/";
 
 const app = express();
 const PORT = 3000;
@@ -35,22 +35,30 @@ async function talkToGPT(gptPrompt) {
   return resposne;
 }
 
-async function summarize(content){
-  let prompt =`Given the text below, generate its summary in under 60 words.
+async function summarize(content) {
+  let prompt = `Given the text below, generate its summary in under 60 words.
   
   TEXT:
   ${content}
 
   SUMMARY:
-  `
-  const response = await axios.post(llm_url, {"prompt": prompt});
-  console.log(response);
+  `;
+  const response = await axios.post(llm_url + "infer", { prompt: prompt });
   if (response.data && response.data.generated_text) {
     const summary = response.data.generated_text;
     return summary;
   } else {
-    throw new Error('Unexpected response format');
+    throw new Error("Unexpected response format");
   }
+}
+
+async function chat(data) {
+  const response = await axios.post(llm_url + "chat", data);
+  console.log(response);
+  if (!response.data.response) {
+    throw new Error("Unexpected response format");
+  }
+  return response.data.response;
 }
 
 //Scrapper functions
@@ -88,13 +96,10 @@ async function getHeadline(url) {
   return result;
 }
 
-app.get("/", (req, res) => {
-  res.send("test 1");
-});
-app.get("/talk_to_GPT", (req, res) => {
+app.get("/summarize", (req, res) => {
   const url = req.query.url;
   console.log(url);
-  
+
   if (url == "test") {
     res.send("Test successful");
   }
@@ -114,6 +119,15 @@ app.get("/talk_to_GPT", (req, res) => {
 
     res.send(result);
   });
+});
+
+app.post("/chat", async (req, res) => {
+  if (!req.body.summary || !req.body.history) {
+    res.statusCode = 500;
+    res.send({ error: "Bad request" });
+  }
+  let text = await chat(req.body);
+  res.send({ text: text, isUser: false });
 });
 
 app.listen(PORT, () => {
